@@ -16,7 +16,7 @@ module.exports = withTM({
   images: {
     unoptimized: true
   },
-  output: 'export',
+  output: 'standalone',
   trailingSlash: true,
   reactStrictMode: false,
   eslint: {
