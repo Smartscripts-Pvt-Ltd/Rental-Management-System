@@ -7,6 +7,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 // ** Axios Imports
 import axios from 'axios'
 
+
 interface DataParams {
   q: string
   role: string
@@ -20,38 +21,39 @@ interface Redux {
 }
 
 // ** Fetch Categories
-export const fetchDataSubCategory = createAsyncThunk(
-  'appSubCategory/fetchDataSubCategory',
-  async (params: DataParams) => {
-    const savedTokenValue = ''
-
+export const fetchDataSubCategory = createAsyncThunk('appSubCategory/fetchDataSubCategory', async (params: DataParams) => {
+  const savedTokenValue = ''
+ 
     if (localStorage) {
       const savedTokenValue = localStorage.getItem('authKey')
       console.log('LocalState: ', savedTokenValue)
     }
+ 
 
-    const config = {
-      headers: { Authorization: `Bearer ${savedTokenValue}` }
-    }
-    const response = await axios.get('https://cms.smarttesting.tech/restAPI/api/sub-category/list', config)
-
-    return response.data
+  const config = {
+    headers: { Authorization: `Bearer ${savedTokenValue}` }
   }
-)
+  const response = await axios.get('https://cms.smarttesting.tech/restAPI/api/sub-category/list', config)
+
+
+  return response.data
+})
 
 // ** Fetch Categories active
 export const fetchDataActiveSubCategory = createAsyncThunk('appSubCategory/fetchDataActiveSubCategory', async () => {
   const savedTokenValue = ''
-
-  if (localStorage) {
-    const savedTokenValue = localStorage.getItem('authKey')
-    console.log('LocalState: ', savedTokenValue)
-  }
+ 
+    if (localStorage) {
+      const savedTokenValue = localStorage.getItem('authKey')
+      console.log('LocalState: ', savedTokenValue)
+    }
+ 
 
   const config = {
     headers: { Authorization: `Bearer ${savedTokenValue}` }
   }
   const response = await axios.get('https://cms.smarttesting.tech/restAPI/api/sub-category/active-records', config)
+
 
   return response.data
 })
@@ -61,23 +63,23 @@ export const addSubCategory = createAsyncThunk(
   'appSubCategory/addSubCategory',
   async (data: { [key: string]: number | string }, { getState, dispatch }: Redux) => {
     const savedTokenValue = ''
-    if (localStorage) {
-      const savedTokenValue = localStorage.getItem('authKey')
-    }
+      if (localStorage) {
+        const savedTokenValue = localStorage.getItem('authKey')
+      }
     const config = {
       method: 'post',
       url: 'https://cms.smarttesting.tech/restAPI/api/sub-category/add',
       headers: {
-        Authorization: `Bearer ${savedTokenValue}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
+          'Authorization': `Bearer ${savedTokenValue}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
       },
       data: data
-    }
+  };
 
     const response = await axios(config)
-
+   
     dispatch(fetchDataSubCategory(getState().user.params))
-
+ 
     return response.data
   }
 )
@@ -87,16 +89,16 @@ export const deleteSubCategory = createAsyncThunk(
   'appSubCategory/deleteSubCategory',
   async (id: number | string, { getState, dispatch }: Redux) => {
     const savedTokenValue = ''
-    if (localStorage) {
-      const savedTokenValue = localStorage.getItem('authKey')
-      console.log('LocalState: ', savedTokenValue)
-    }
-
+      if (localStorage) {
+        const savedTokenValue = localStorage.getItem('authKey')
+        console.log('LocalState: ', savedTokenValue)
+      }
+ 
     const config = {
       headers: { Authorization: `Bearer ${savedTokenValue}` }
     }
-    const response = await axios.post('https://cms.smarttesting.tech/restAPI/api/sub-category/delete/' + id, config)
-
+    const response = await axios.post('https://cms.smarttesting.tech/restAPI/api/sub-category/delete/'+id, config)
+  
     dispatch(fetchDataSubCategory(getState().user.params))
 
     return response.data
@@ -104,53 +106,57 @@ export const deleteSubCategory = createAsyncThunk(
 )
 
 // ** Edit Category
-export const editSubCategory = createAsyncThunk('appSubCategory/editSubCategory', async (id: number | string) => {
-  const savedTokenValue = ''
-  if (localStorage) {
-    const savedTokenValue = localStorage.getItem('authKey')
-  }
-  const config = {
-    headers: { Authorization: `Bearer ${savedTokenValue}` }
-  }
-  const response = await axios.get('https://cms.smarttesting.tech/restAPI/api/sub-category/edit/' + id, config)
+export const editSubCategory = createAsyncThunk(
+  'appSubCategory/editSubCategory',
+  async (id: number | string) => {
+    const savedTokenValue = ''
+    if (localStorage) {
+      const savedTokenValue = localStorage.getItem('authKey')
+    }
+    const config = {
+      headers: { Authorization: `Bearer ${savedTokenValue}` }
+    }
+    const response = await axios.get('https://cms.smarttesting.tech/restAPI/api/sub-category/edit/'+id, config)
 
-  return response.data
-})
+    return response.data
+  }
+)
 
 // ** Update Category
 export const updateSubCategory = createAsyncThunk(
   'appSubCategory/updateSubCategory',
   async (data: { [key: string]: number | string }, { getState, dispatch }: Redux) => {
     const savedTokenValue = ''
-    const obj = {
+    let obj = {
       sub_catname: data.sub_catname,
       abbreavation: data.abbreavation,
       description: data.description,
       status: data.status,
-      image: data.image
+      image : data.image,
     }
-
+   
     if (localStorage) {
       const savedTokenValue = localStorage.getItem('authKey')
     }
-
+      
     const config = {
       method: 'post',
-      url: 'https://cms.smarttesting.tech/restAPI/api/sub-category/edit/' + data.id,
+      url: 'https://cms.smarttesting.tech/restAPI/api/sub-category/edit/'+data.id,
       headers: {
-        Authorization: `Bearer ${savedTokenValue}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
+          'Authorization': `Bearer ${savedTokenValue}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
       },
       data: obj
-    }
-
+    };
+ 
     const response = await axios(config)
-
+   
     dispatch(fetchDataSubCategory(getState().user.params))
-
+ 
     return response.data
   }
 )
+
 
 export const appSubCategorySlice = createSlice({
   name: 'appSubCategory',
@@ -159,13 +165,13 @@ export const appSubCategorySlice = createSlice({
     total: 1,
     params: {},
     allData: [],
-    editData: {
-      id: '',
-      sub_catname: '',
-      abbreavation: '',
-      description: '',
-      status: '',
-      image: ''
+    editData:{ 
+      id: "",
+      sub_catname: "",
+      abbreavation: "",
+      description: "",
+      status: "",
+      image : ""
     }
   },
   reducers: {},
@@ -181,7 +187,7 @@ export const appSubCategorySlice = createSlice({
       state.params = action.payload.params
       state.allData = action.payload
     })
-    builder.addCase(editSubCategory.fulfilled, (state, action) => {
+    builder.addCase(editSubCategory.fulfilled, (state, action) =>{
       state.total = action.payload.total
       state.params = action.payload.params
       state.allData = action.payload.allData

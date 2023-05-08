@@ -13,14 +13,18 @@ const withTM = require('next-transpile-modules')([
 ])
 
 module.exports = withTM({
+  assetPrefix: './',
   images: {
-    unoptimized: true
-  },
-  output: 'standalone',
+   unoptimized: true
+ },
+  output: 'export',
   trailingSlash: true,
   reactStrictMode: false,
   eslint: {
     ignoreDuringBuilds: true
+  },
+  experimental: {
+    esmExternals: false
   },
   webpack: config => {
     config.resolve.alias = {

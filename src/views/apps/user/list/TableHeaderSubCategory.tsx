@@ -14,7 +14,7 @@ interface TableHeaderProps {
 
 const TableHeader = (props: TableHeaderProps) => {
   // ** Props
-  console.log('****&&&&&&&&&&&&', props)
+  console.log("****&&&&&&&&&&&&",props)
   const { handleFilter, toggle, value } = props
 
   return (

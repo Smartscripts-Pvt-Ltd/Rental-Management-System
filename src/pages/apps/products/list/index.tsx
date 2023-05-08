@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useEffect, MouseEvent, ElementType, ChangeEvent, useCallback } from 'react'
+import { useState, useEffect, MouseEvent, ElementType, ChangeEvent,useCallback } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -28,10 +28,9 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
-import Button, { ButtonProps } from '@mui/material/Button'
+import Button, {ButtonProps} from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
-
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 
@@ -56,7 +55,7 @@ import axios from 'axios'
 import { RootState, AppDispatch } from 'src/store'
 import { CardStatsType } from 'src/@fake-db/types'
 import { ThemeColor } from 'src/@core/layouts/types'
-import { UsersType, ProductType } from 'src/types/apps/userTypes'
+import { UsersType,ProductType } from 'src/types/apps/userTypes'
 import { CardStatsHorizontalProps } from 'src/@core/components/card-statistics/types'
 
 // ** Custom Table Components Imports
@@ -65,6 +64,7 @@ import AddProductDrawer from 'src/views/apps/user/list/AddProductDrawer'
 import { fetchDataActiveSubCategory } from 'src/store/apps/sub-category'
 import { fetchDataActiveCategory } from 'src/store/apps/category'
 import UserSuspendDialog from 'src/views/apps/user/view/UserSuspendDialog'
+
 
 const ImgStyled = styled('img')(({ theme }) => ({
   width: 120,
@@ -90,7 +90,9 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
   }
 }))
 
-const data: UsersType = {
+
+
+let data: UsersType = {
   id: 1,
   role: 'admin',
   status: 'active',
@@ -174,7 +176,7 @@ const RowOptions = ({ id }: { id: number | string }) => {
     setAnchorEl(event.currentTarget)
   }
   const handleRowOptionsClose = () => {
-    setAnchorEl(null)
+     setAnchorEl(null)
   }
 
   const handleDelete = () => {
@@ -185,20 +187,22 @@ const RowOptions = ({ id }: { id: number | string }) => {
   const [status, setStaus] = useState<string>('1')
   const [imgSrc, setImgSrc] = useState<string>('/images/avatars/1.png')
   const [inputValue, setInputValue] = useState<string>('')
-
+  
   const editstore = useSelector((state: RootState) => state.product.editData)
   const storeSubCategory = useSelector((state: RootState) => state.subCategory.allData)
   const storeCategory = useSelector((state: RootState) => state.category.allData)
-  console.log('************store data is', storeSubCategory)
-  console.log('storeCategory', storeCategory)
+  console.log("************store data is",storeSubCategory);
+  console.log("storeCategory",storeCategory)
   useEffect(() => {
-    debugger
-    dispatch(fetchDataActiveSubCategory())
+    debugger;
+    dispatch(
+      fetchDataActiveSubCategory() 
+    )
     dispatch(fetchDataActiveCategory())
   }, [dispatch])
-  console.log('************store data is', editstore)
-  const [editData, setEditData] = useState({
-    id: '',
+  console.log("************store data is",editstore);
+  let [editData, setEditData] = useState({
+    id: "",
     name: '',
     category: '',
     sub_category: '',
@@ -208,11 +212,13 @@ const RowOptions = ({ id }: { id: number | string }) => {
     status: ''
   })
 
+ 
   useEffect(() => {
-    if (editstore) {
-      setEditData(editstore)
-    }
+      if(editstore) {
+        setEditData(editstore)
+      }
   }, [editstore])
+ 
 
   const handleEdit = () => {
     dispatch(editProduct(id))
@@ -220,34 +226,35 @@ const RowOptions = ({ id }: { id: number | string }) => {
     handleRowOptionsClose()
   }
 
-  const handleInputChange = (e: any) => {
-    setEditData({ ...editData, name: e.target.value })
+  const handleInputChange = (e:any) => {
+    setEditData({...editData, name: e.target.value})
   }
 
-  const handleInputChangeCategory = (e: any) => {
-    console.log('category change', e.target.value)
-    setEditData({ ...editData, category: e.target.value })
+  const handleInputChangeCategory = (e:any) => {
+    console.log("category change",e.target.value)
+    setEditData({...editData, category: e.target.value})
   }
 
-  const handleInputChangeSubCategory = (e: any) => {
-    setEditData({ ...editData, sub_category: e.target.value })
+  const handleInputChangeSubCategory = (e:any) => {
+    setEditData({...editData, sub_category: e.target.value})
   }
 
-  const handleInputChangeDescription = (e: any) => {
-    setEditData({ ...editData, description: e.target.value })
+  const handleInputChangeDescription = (e:any) => {
+    setEditData({...editData, description: e.target.value})
   }
 
-  const handleInputChangeSpecification = (e: any) => {
-    setEditData({ ...editData, specification: e.target.value })
+  const handleInputChangeSpecification = (e:any) => {
+    setEditData({...editData, specification: e.target.value})
   }
 
-  const handleInputChangeStatus = (e: any) => {
-    setEditData({ ...editData, status: e.target.value })
+  const handleInputChangeStatus = (e:any) => {
+    setEditData({...editData, status: e.target.value})
   }
+
 
   const handleEditData = () => {
-    console.log('data to send for update', editData)
-    editData.image = imgSrc
+    console.log("data to send for update",editData)
+    editData.image =  imgSrc;
     dispatch(updateProduct(editData))
   }
 
@@ -269,10 +276,8 @@ const RowOptions = ({ id }: { id: number | string }) => {
   }
 
   const toggleEditUserDrawer = () => setEditUserOpen(!editUserOpen)
-
   // Handle Edit dialog
   const [openEdit, setOpenEdit] = useState<boolean>(false)
-
   // const handleEditClickOpen = () => setOpenEdit(true)
   const handleEditClose = () => setOpenEdit(false)
 
@@ -316,132 +321,124 @@ const RowOptions = ({ id }: { id: number | string }) => {
       </Menu>
       {/* <EditUserDrawer open={editUserOpen} toggle={toggleEditUserDrawer}></EditUserDrawer> */}
       <Dialog
-        open={openEdit}
-        onClose={handleEditClose}
-        aria-labelledby='user-view-edit'
-        sx={{ '& .MuiPaper-root': { width: '100%', maxWidth: 650, p: [2, 10] } }}
-        aria-describedby='user-view-edit-description'
-      >
-        <DialogTitle id='user-view-edit' sx={{ textAlign: 'center', fontSize: '1.5rem !important' }}>
-          Edit Product Information
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText variant='body2' id='user-view-edit-description' sx={{ textAlign: 'center', mb: 7 }}>
-            Update product details here.
-          </DialogContentText>
-          {editData && (
-            <form>
-              <Grid container spacing={6}>
-                <Grid item xs={12} sm={6}>
-                  <TextField fullWidth label='Product Name' value={editData.name} onChange={handleInputChange} />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id='user-view-language-label'>Category</InputLabel>
-                    <Select
-                      label='Category'
-                      value={editData.category}
-                      id='category'
-                      labelId='user-view-language-label'
-                      onChange={handleInputChangeCategory}
-                    >
-                      {storeCategory &&
-                        storeCategory.map((item: any) => {
-                          return <MenuItem value={item.id}>{item.category_name}</MenuItem>
+              open={openEdit}
+              onClose={handleEditClose}
+              aria-labelledby='user-view-edit'
+              sx={{ '& .MuiPaper-root': { width: '100%', maxWidth: 650, p: [2, 10] } }}
+              aria-describedby='user-view-edit-description'
+            >
+              <DialogTitle id='user-view-edit' sx={{ textAlign: 'center', fontSize: '1.5rem !important' }}>
+                Edit Product Information
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText variant='body2' id='user-view-edit-description' sx={{ textAlign: 'center', mb: 7 }}>
+                  Update product details here.
+                </DialogContentText>
+                {editData &&<form>
+                  <Grid container spacing={6}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField fullWidth label='Product Name' value={editData.name} onChange={handleInputChange} />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id='user-view-language-label'>Category</InputLabel>
+                        <Select
+                          label='Category'
+                          value={editData.category}
+                          id='category'
+                          labelId='user-view-language-label'
+                          onChange={handleInputChangeCategory}
+                        >
+                         {storeCategory && storeCategory.map((item:any) => {
+                          return(
+                            <MenuItem value={item.id}>{item.category_name}</MenuItem>
+                          )
                         })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id='user-view-language-label'>Sub Category</InputLabel>
-                    <Select
-                      label='Sub Category'
-                      value={editData.sub_category}
-                      id='subcategory'
-                      labelId='user-subcat-label'
-                      onChange={handleInputChangeSubCategory}
-                    >
-                      {storeSubCategory &&
-                        storeSubCategory.map((item: any) => {
-                          return <MenuItem value={item.id}>{item.sub_catname}</MenuItem>
-                        })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    type='description'
-                    label='Description'
-                    value={editData.description}
-                    onChange={handleInputChangeDescription}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label='Specification'
-                    value={editData.specification}
-                    onChange={handleInputChangeSpecification}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id='user-view-language-label'>Select Status</InputLabel>
-                    <Select
-                      label='Status'
-                      value={editData.status}
-                      id='role'
-                      labelId='user-view-language-label'
-                      onChange={handleInputChangeStatus}
-                    >
-                      <MenuItem value='1'>Active</MenuItem>
-                      <MenuItem value='2'>InActive</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <ImgStyled src={imgSrc} alt='Profile Pic' />
-                  <div>
-                    <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
-                      Upload New Photo
-                      <input
-                        hidden
-                        type='file'
-                        value={inputValue}
-                        accept='image/png, image/jpeg'
-                        onChange={handleInputImageChange}
-                        id='account-settings-upload-image'
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id='user-view-language-label'>Sub Category</InputLabel>
+                        <Select
+                          label='Sub Category'
+                          value={editData.sub_category}
+                          id='subcategory'
+                          labelId='user-subcat-label'
+                          onChange={handleInputChangeSubCategory}
+                        >
+                           {storeSubCategory && storeSubCategory.map((item:any) => {
+                            return(
+                              <MenuItem value={item.id}>{item.sub_catname}</MenuItem>
+                            )
+                          })}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField fullWidth type='description' label='Description' value={editData.description} onChange={handleInputChangeDescription}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label='Specification'
+                        value={editData.specification}
+                        onChange={handleInputChangeSpecification} 
                       />
-                    </ButtonStyled>
-                    <ResetButtonStyled color='secondary' variant='outlined' onClick={handleInputImageReset}>
-                      Reset
-                    </ResetButtonStyled>
-                    <Typography sx={{ mt: 5, color: 'text.disabled' }}>
-                      Allowed PNG or JPEG. Max size of 800K.
-                    </Typography>
-                  </div>
-                </Grid>
-              </Grid>
-            </form>
-          )}
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button variant='contained' sx={{ mr: 1 }} onClick={handleEditData}>
-            Submit
-          </Button>
-          <Button variant='outlined' color='secondary' onClick={handleEditClose}>
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <UserSuspendDialog open={suspendDialogOpen} setOpen={setSuspendDialogOpen} deleteData={id} pageName='Product' />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id='user-view-language-label'>Select Status</InputLabel>
+                        <Select
+                          label='Status'
+                          value={editData.status}
+                          id='role'
+                          labelId='user-view-language-label'
+                          onChange={handleInputChangeStatus}
+                        >
+                          <MenuItem value='1'>Active</MenuItem>
+                          <MenuItem value='2'>InActive</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                    <ImgStyled src={imgSrc} alt='Profile Pic' />
+                    <div>
+                      <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
+                        Upload New Photo
+                        <input
+                          hidden
+                          type='file'
+                          value={inputValue}
+                          accept='image/png, image/jpeg'
+                          onChange={handleInputImageChange}
+                          id='account-settings-upload-image'
+                        />
+                      </ButtonStyled>
+                      <ResetButtonStyled color='secondary' variant='outlined' onClick={handleInputImageReset}>
+                        Reset
+                      </ResetButtonStyled>
+                      <Typography sx={{ mt: 5, color: 'text.disabled' }}>Allowed PNG or JPEG. Max size of 800K.</Typography>
+                    </div>
+                    </Grid>
+                  </Grid>
+                </form>}
+              </DialogContent>
+              <DialogActions sx={{ justifyContent: 'center' }}>
+                <Button variant='contained' sx={{ mr: 1 }} onClick={handleEditData}>
+                  Submit
+                </Button>
+                <Button variant='outlined' color='secondary' onClick={handleEditClose}>
+                  Cancel
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <UserSuspendDialog open={suspendDialogOpen} setOpen={setSuspendDialogOpen} deleteData={id} pageName="Product"/>
     </>
   )
 }
 
-const columns: GridColumns<ProductType> = [
+const columns:GridColumns<ProductType> = [
   {
     flex: 0.2,
     minWidth: 230,
@@ -450,6 +447,7 @@ const columns: GridColumns<ProductType> = [
     renderCell: ({ row }: CellType) => {
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
+         
           <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
             <StyledLink href='/apps/user/view/overview/'>{row.name}</StyledLink>
           </Box>
@@ -477,10 +475,10 @@ const columns: GridColumns<ProductType> = [
     headerName: 'Sub Category',
     renderCell: ({ row }: CellType) => {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3 } }}>
-          {/* <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3, color: userRoleObj[row.role].color } }}> */}
+        <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3} }}>
+         {/* <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3, color: userRoleObj[row.role].color } }}> */}
           {/* <Icon icon={userRoleObj[row.role].icon} fontSize={20} /> */}
-
+          
           <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
             {row.sub_category}
           </Typography>
@@ -511,7 +509,7 @@ const columns: GridColumns<ProductType> = [
         <Typography variant='subtitle1' noWrap sx={{ textTransform: 'capitalize' }}>
           {row.description}
         </Typography>
-      )
+      ) 
     }
   },
   {
@@ -532,12 +530,12 @@ const UserList = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) =
   const [status, setStatus] = useState<string>('')
   const [pageSize, setPageSize] = useState<number>(10)
   const [addUserOpen, setAddUserOpen] = useState<boolean>(false)
+  
 
   // ** Hooks
   const dispatch = useDispatch<AppDispatch>()
   const store = useSelector((state: RootState) => state.product)
-  console.log('************store data is', store)
-
+  console.log("************store data is",store);
   // let [usersList, setUsersList] = useState(store.data)
   // if(usersList.length > 0){
   //   usersList.map((item: any) =>{
@@ -581,6 +579,7 @@ const UserList = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) =
   }, [])
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
+  
 
   return (
     <Grid container spacing={6}>
@@ -615,6 +614,8 @@ const UserList = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) =
       </Grid>
 
       <AddProductDrawer open={addUserOpen} toggle={toggleAddUserDrawer} />
+     
+       
     </Grid>
   )
 }

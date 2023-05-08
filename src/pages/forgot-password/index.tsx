@@ -1,10 +1,12 @@
 // ** React Imports
 import { ReactNode, SyntheticEvent, useState } from 'react'
-import Router, { useRouter } from 'next/router'
+import Router , {useRouter}  from 'next/router';
+    
+
+
 
 // ** Next Import
 import Link from 'next/link'
-
 // import { redirect } from 'next/navigation';
 
 // ** MUI Components
@@ -31,6 +33,7 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
 
 import axios from 'axios'
+
 
 // Styled Components
 const ForgotPasswordIllustrationWrapper = styled(Box)<BoxProps>(({ theme }) => ({
@@ -88,16 +91,17 @@ const ForgotPassword = () => {
   // ** Hooks
   const theme = useTheme()
   const { settings } = useSettings()
-  const [emailVal, setEmailVal] = useState('')
+  const [emailVal, setEmailVal] = useState('');
   const router = useRouter()
+
 
   // ** Vars
   const { skin } = settings
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
 
   const handleSubmit = (e: SyntheticEvent) => {
-    console.log('***************forget password', emailVal)
-    const obj = {
+    console.log("***************forget password",emailVal)
+    let obj = {
       email: emailVal
     }
 
@@ -105,44 +109,48 @@ const ForgotPassword = () => {
       method: 'post',
       url: 'https://cms.smarttesting.tech/restAPI/forgotpassword',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded'
       },
       data: obj
-    }
+    };
 
-    axios(config).then((result: any) => {
-      console.log('inside this', result)
-      if (result.status == 201) {
-        console.log('**********&&&&&&&&&&', result.data.token)
-        const url = result.data.token
-        console.log('**********&&&&&&&&&&&&', url)
-        debugger
-        axios.get(url).then(response => {
-          if (response.status == 201) {
-            const updateUrl = response.data.messages.link
-            localStorage.setItem('updateUrl', updateUrl)
+    axios(config).then((result:any) => {
+      console.log("inside this",result)
+      if(result.status == 201){
+        console.log("**********&&&&&&&&&&",result.data.token);
+        let url = result.data.token;
+        console.log("**********&&&&&&&&&&&&",url)
+        debugger;
+        axios.get(url).then((response) => {
+          if(response.status == 201){
+            let updateUrl = response.data.messages.link;
+            localStorage.setItem('updateUrl',updateUrl)
             router.push('/reset-password')
-
             // redirect('/reset-password');
           }
-          console.log('**********7777', response)
-
+          console.log("**********7777",response)
           // navigate("/reset-password/");
         })
+       
       }
+     
+      
+    
     })
+   
 
     // axios
     // .post('https://cms.smarttesting.tech/restAPI/forgotpassword', emailVal)
     // .then(async response => {
     //  console.log("**********&&&&&&&&&&",response);
     // })
-
+   
     e.preventDefault()
   }
 
-  const handleChangeEmail = (e: any) => {
-    setEmailVal(e.target.value)
+  const handleChangeEmail = (e:any) => {
+    setEmailVal(e.target.value);
+    
   }
 
   const imageSource =
@@ -264,15 +272,8 @@ const ForgotPassword = () => {
               </Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
-              <TextField
-                autoFocus
-                type='email'
-                value={emailVal}
-                onChange={handleChangeEmail}
-                label='Email'
-                sx={{ display: 'flex', mb: 4 }}
-              />
-              <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25 }}>
+              <TextField autoFocus type='email'  value={emailVal} onChange={handleChangeEmail} label='Email' sx={{ display: 'flex', mb: 4 }} />
+              <Button  fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25 }}>
                 Send reset link
               </Button>
               <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

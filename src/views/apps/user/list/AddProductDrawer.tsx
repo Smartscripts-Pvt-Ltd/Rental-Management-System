@@ -4,7 +4,7 @@ import { useState, useEffect, ElementType, ChangeEvent } from 'react'
 // ** MUI Imports
 import Drawer from '@mui/material/Drawer'
 import Select from '@mui/material/Select'
-import Button, { ButtonProps } from '@mui/material/Button'
+import Button, {ButtonProps}from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
 import { styled } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography'
 import Box, { BoxProps } from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
+
 
 // ** Third Party Imports
 import * as yup from 'yup'
@@ -35,6 +36,8 @@ import { RootState, AppDispatch } from 'src/store'
 
 import { fetchDataActiveSubCategory } from 'src/store/apps/sub-category'
 import { fetchDataActiveCategory } from 'src/store/apps/category'
+
+
 
 const ImgStyled = styled('img')(({ theme }) => ({
   width: 120,
@@ -59,6 +62,7 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
     marginTop: theme.spacing(4)
   }
 }))
+
 
 interface SidebarAddUserType {
   open: boolean
@@ -130,10 +134,13 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
   const dispatch = useDispatch<AppDispatch>()
   const storeSubCategory = useSelector((state: RootState) => state.subCategory.allData)
   const storeCategory = useSelector((state: RootState) => state.category.allData)
-  console.log('************store data is', storeSubCategory)
-  console.log('storeCategory', storeCategory)
+  console.log("************store data is",storeSubCategory);
+  console.log("storeCategory",storeCategory)
   useEffect(() => {
-    dispatch(fetchDataActiveSubCategory())
+    debugger;
+    dispatch(
+      fetchDataActiveSubCategory() 
+    )
     dispatch(fetchDataActiveCategory())
   }, [dispatch])
   const {
@@ -149,13 +156,13 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
   })
 
   const onSubmit = (data: ProductData) => {
-    console.log('OnSubmit of Users', data)
-    data.category = category
-    data.sub_category = subCategory
-    data.image = imgSrc
-    data.status = status
-
-    dispatch(addProduct({ ...data }))
+    console.log("OnSubmit of Users",data);
+    data.category = category;
+    data.sub_category  = subCategory;
+    data.image = imgSrc;
+    data.status = status;
+    
+    dispatch(addProduct({...data}))
     toggle()
     reset()
   }
@@ -244,10 +251,12 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
               onChange={e => setCategory(e.target.value)}
               inputProps={{ placeholder: 'Select Category' }}
             >
-              {storeCategory &&
-                storeCategory.map((item: any) => {
-                  return <MenuItem value={item.id}>{item.category_name}</MenuItem>
-                })}
+             {storeCategory && storeCategory.map((item:any) => {
+                return(
+                  <MenuItem value={item.id}>{item.category_name}</MenuItem>
+                )
+              })}
+             
             </Select>
           </FormControl>
           <FormControl fullWidth sx={{ mb: 6 }}>
@@ -261,11 +270,12 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
               onChange={e => setSubCategory(e.target.value)}
               inputProps={{ placeholder: 'Select Sub Category' }}
             >
-              {storeSubCategory &&
-                storeSubCategory.map((item: any) => {
-                  return <MenuItem value={item.id}>{item.sub_catname}</MenuItem>
-                })}
-
+              {storeSubCategory && storeSubCategory.map((item:any) => {
+                return(
+                  <MenuItem value={item.id}>{item.sub_catname}</MenuItem>
+                )
+              })}
+             
               {/* <MenuItem value='1'>Author</MenuItem>
               <MenuItem value='2'>Editor</MenuItem>
               <MenuItem value='3'>Maintainer</MenuItem>
@@ -285,6 +295,7 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
             >
               <MenuItem value='1'>Active</MenuItem>
               <MenuItem value='2'>InActive</MenuItem>
+             
             </Select>
           </FormControl>
           <FormControl fullWidth sx={{ mb: 6 }}>
@@ -302,9 +313,7 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
                 />
               )}
             />
-            {errors.specification && (
-              <FormHelperText sx={{ color: 'error.main' }}>{errors.specification.message}</FormHelperText>
-            )}
+            {errors.specification && <FormHelperText sx={{ color: 'error.main' }}>{errors.specification.message}</FormHelperText>}
           </FormControl>
           <FormControl fullWidth sx={{ mb: 6 }}>
             <Controller
@@ -321,29 +330,27 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
                 />
               )}
             />
-            {errors.description && (
-              <FormHelperText sx={{ color: 'error.main' }}>{errors.description.message}</FormHelperText>
-            )}
+            {errors.description && <FormHelperText sx={{ color: 'error.main' }}>{errors.description.message}</FormHelperText>}
           </FormControl>
           <ImgStyled src={imgSrc} alt='Profile Pic' />
-          <div>
-            <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
-              Upload New Photo
-              <input
-                hidden
-                type='file'
-                value={inputValue}
-                accept='image/png, image/jpeg'
-                onChange={handleInputImageChange}
-                id='account-settings-upload-image'
-              />
-            </ButtonStyled>
-            <ResetButtonStyled color='secondary' variant='outlined' onClick={handleInputImageReset}>
-              Reset
-            </ResetButtonStyled>
-            <Typography sx={{ mt: 5, color: 'text.disabled' }}>Allowed PNG or JPEG. Max size of 800K.</Typography>
-          </div>
-          {/* <ImgStyled src={imgSrc} alt='Profile Pic' />
+                <div>
+                  <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
+                    Upload New Photo
+                    <input
+                      hidden
+                      type='file'
+                      value={inputValue}
+                      accept='image/png, image/jpeg'
+                      onChange={handleInputImageChange}
+                      id='account-settings-upload-image'
+                    />
+                  </ButtonStyled>
+                  <ResetButtonStyled color='secondary' variant='outlined' onClick={handleInputImageReset}>
+                    Reset
+                  </ResetButtonStyled>
+                  <Typography sx={{ mt: 5, color: 'text.disabled' }}>Allowed PNG or JPEG. Max size of 800K.</Typography>
+                </div>
+                {/* <ImgStyled src={imgSrc} alt='Profile Pic' />
                 <div>
                   <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
                     Upload New Photo

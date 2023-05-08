@@ -2,7 +2,7 @@
 import { ReactNode, SyntheticEvent, useState, ChangeEvent, MouseEvent } from 'react'
 import Grid from '@mui/material/Grid'
 import FormControl from '@mui/material/FormControl'
-import Router, { useRouter } from 'next/router'
+import Router , {useRouter}  from 'next/router';
 
 // ** Next Import
 import Link from 'next/link'
@@ -100,8 +100,10 @@ const ResetPassword = () => {
   // ** Hooks
   const theme = useTheme()
   const { settings } = useSettings()
-  const [emailVal, setEmailVal] = useState('')
+  const [emailVal, setEmailVal] = useState('');
   const router = useRouter()
+
+
 
   // ** Vars
   const { skin } = settings
@@ -115,34 +117,38 @@ const ResetPassword = () => {
   })
 
   const handleSubmit = (e: SyntheticEvent) => {
-    const obj = {
+    let obj = {
       password: values.newPassword,
       password_confirm: values.confirmNewPassword
     }
-    const updateUrl = localStorage.getItem('updateUrl')
-    if (updateUrl) {
+    let updateUrl = localStorage.getItem('updateUrl')
+    if(updateUrl){
       const config = {
         method: 'post',
         url: updateUrl,
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded'
         },
         data: obj
-      }
-      axios(config).then((result: any) => {
-        console.log('inside this', result)
-        if (result.status == 201) {
+      };
+      axios(config).then((result:any) => {
+        console.log("inside this",result)
+        if(result.status == 201){
           router.push('/login')
           localStorage.removeItem('updateUrl')
         }
       })
     }
+   
 
+   
+   
     e.preventDefault()
   }
 
-  const handleChangeEmail = (e: any) => {
-    setEmailVal(e.target.value)
+  const handleChangeEmail = (e:any) => {
+    setEmailVal(e.target.value);
+    
   }
 
   const handleNewPasswordChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -155,8 +161,8 @@ const ResetPassword = () => {
     event.preventDefault()
   }
 
-  // Handle Confirm Password
-  const handleConfirmNewPasswordChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+   // Handle Confirm Password
+   const handleConfirmNewPasswordChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value })
   }
   const handleClickShowConfirmNewPassword = () => {
@@ -280,9 +286,12 @@ const ResetPassword = () => {
             </Box>
             <Box sx={{ mb: 6 }}>
               <TypographyStyled variant='h5'>Reset Password? 🔒</TypographyStyled>
-              <Typography variant='body2'>Reset your password here!</Typography>
+              <Typography variant='body2'>
+                Reset your password here!
+              </Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
+             
               <Grid container spacing={12}>
                 <Grid item xs={12}>
                   <FormControl fullWidth>
@@ -309,7 +318,7 @@ const ResetPassword = () => {
                   </FormControl>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={12} >
                   <FormControl fullWidth>
                     <InputLabel htmlFor='user-view-security-confirm-new-password'>Confirm New Password</InputLabel>
                     <OutlinedInput
@@ -340,12 +349,12 @@ const ResetPassword = () => {
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <Button fullWidth type='submit' variant='contained' sx={{ mb: 5.25 }}>
-                    Reset
-                  </Button>
+                  <Button fullWidth  type='submit' variant='contained' sx={{ mb: 5.25 }}>
+                  Reset
+                </Button>
                 </Grid>
               </Grid>
-
+            
               <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <LinkStyled href='/login'>
                   <Icon icon='mdi:chevron-left' fontSize='2rem' />

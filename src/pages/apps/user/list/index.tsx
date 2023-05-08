@@ -31,7 +31,6 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
-
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 
@@ -63,8 +62,7 @@ import { CardStatsHorizontalProps } from 'src/@core/components/card-statistics/t
 import TableHeader from 'src/views/apps/user/list/TableHeader'
 import AddUserDrawer from 'src/views/apps/user/list/AddUserDrawer'
 import UserSuspendDialog from 'src/views/apps/user/view/UserSuspendDialog'
-
-const data: UsersType = {
+let data: UsersType = {
   id: 1,
   role: 'admin',
   status: 'active',
@@ -148,7 +146,7 @@ const RowOptions = ({ id }: { id: number | string }) => {
     setAnchorEl(event.currentTarget)
   }
   const handleRowOptionsClose = () => {
-    setAnchorEl(null)
+     setAnchorEl(null)
   }
 
   const handleDelete = () => {
@@ -156,10 +154,11 @@ const RowOptions = ({ id }: { id: number | string }) => {
     handleRowOptionsClose()
   }
 
+  
   const editstore = useSelector((state: RootState) => state.user.editData)
-  console.log('************store data is', editstore)
-  const [editData, setEditData] = useState({
-    id: '',
+  console.log("************store data is",editstore);
+  let [editData, setEditData] = useState({
+    id: "",
     role: '',
     password: '',
     username: '',
@@ -168,14 +167,16 @@ const RowOptions = ({ id }: { id: number | string }) => {
     contact_no: '',
     current_plan: '',
     firstname: '',
-    email: ''
+    email: '',
   })
 
+ 
   useEffect(() => {
-    if (editstore) {
-      setEditData(editstore)
-    }
+      if(editstore) {
+        setEditData(editstore)
+      }
   }, [editstore])
+ 
 
   const handleEdit = () => {
     dispatch(editUser(id))
@@ -183,40 +184,40 @@ const RowOptions = ({ id }: { id: number | string }) => {
     handleRowOptionsClose()
   }
 
-  const handleInputChange = (e: any) => {
-    setEditData({ ...editData, firstname: e.target.value })
+  const handleInputChange = (e:any) => {
+    setEditData({...editData, firstname: e.target.value})
   }
 
-  const handleInputChangeEmail = (e: any) => {
-    setEditData({ ...editData, email: e.target.value })
+  const handleInputChangeEmail = (e:any) => {
+    setEditData({...editData, email: e.target.value})
   }
 
-  const handleInputChangeUsername = (e: any) => {
-    setEditData({ ...editData, username: e.target.value })
+  const handleInputChangeUsername = (e:any) => {
+    setEditData({...editData, username: e.target.value})
   }
 
-  const handleInputChangePassword = (e: any) => {
-    setEditData({ ...editData, password: e.target.value })
+  const handleInputChangePassword = (e:any) => {
+    setEditData({...editData, password: e.target.value})
   }
 
-  const handleInputChangeContact = (e: any) => {
-    setEditData({ ...editData, contact_no: e.target.value })
+  const handleInputChangeContact = (e:any) => {
+    setEditData({...editData, contact_no: e.target.value})
   }
 
-  const handleInputChangeCurrentPlan = (e: any) => {
-    setEditData({ ...editData, current_plan: e.target.value })
+  const handleInputChangeCurrentPlan = (e:any) => {
+    setEditData({...editData, current_plan: e.target.value})
   }
 
-  const handleInputChangeCountry = (e: any) => {
-    setEditData({ ...editData, country: e.target.value })
+  const handleInputChangeCountry = (e:any) =>{
+    setEditData({...editData, country: e.target.value})
   }
 
-  const handleInputChangeRole = (e: any) => {
-    setEditData({ ...editData, role: e.target.value })
+  const handleInputChangeRole = (e:any) =>{
+    setEditData({...editData, role: e.target.value})
   }
 
-  const handleInputChangeCompany = (e: any) => {
-    setEditData({ ...editData, company: e.target.value })
+  const handleInputChangeCompany = (e:any) =>{
+    setEditData({...editData, company: e.target.value})
   }
 
   const handleEditData = () => {
@@ -224,10 +225,8 @@ const RowOptions = ({ id }: { id: number | string }) => {
   }
 
   const toggleEditUserDrawer = () => setEditUserOpen(!editUserOpen)
-
   // Handle Edit dialog
   const [openEdit, setOpenEdit] = useState<boolean>(false)
-
   // const handleEditClickOpen = () => setOpenEdit(true)
   const handleEditClose = () => setOpenEdit(false)
 
@@ -271,138 +270,125 @@ const RowOptions = ({ id }: { id: number | string }) => {
       </Menu>
       {/* <EditUserDrawer open={editUserOpen} toggle={toggleEditUserDrawer}></EditUserDrawer> */}
       <Dialog
-        open={openEdit}
-        onClose={handleEditClose}
-        aria-labelledby='user-view-edit'
-        sx={{ '& .MuiPaper-root': { width: '100%', maxWidth: 650, p: [2, 10] } }}
-        aria-describedby='user-view-edit-description'
-      >
-        <DialogTitle id='user-view-edit' sx={{ textAlign: 'center', fontSize: '1.5rem !important' }}>
-          Edit User Information
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText variant='body2' id='user-view-edit-description' sx={{ textAlign: 'center', mb: 7 }}>
-            Update user details here.
-          </DialogContentText>
-          {editData && (
-            <form>
-              <Grid container spacing={6}>
-                <Grid item xs={12} sm={6}>
-                  <TextField fullWidth label='Full Name' value={editData.firstname} onChange={handleInputChange} />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label='Username'
-                    value={editData.username}
-                    onChange={handleInputChangeUsername}
-                    InputProps={{ startAdornment: <InputAdornment position='start'>@</InputAdornment> }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    type='email'
-                    label='Email'
-                    value={editData.email}
-                    onChange={handleInputChangeEmail}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label='Password'
-                    value={editData.password}
-                    onChange={handleInputChangePassword}
-                    InputProps={{ startAdornment: <InputAdornment position='start'>@</InputAdornment> }}
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label='Contact'
-                    value={editData.contact_no}
-                    onChange={handleInputChangeContact}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id='user-view-language-label'>Current Plan</InputLabel>
-                    <Select
-                      label='CurrentPlan'
-                      value={editData.current_plan}
-                      id='currentPlan'
-                      labelId='user-view-language-label'
-                      onChange={handleInputChangeCurrentPlan}
-                    >
-                      <MenuItem value='basic'>Basic</MenuItem>
-                      <MenuItem value='company'>Company</MenuItem>
-                      <MenuItem value='enterprise'>Enterprise</MenuItem>
-                      <MenuItem value='team'>Team</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id='user-view-language-label'>Select Role</InputLabel>
-                    <Select
-                      label='Role'
-                      value={editData.role}
-                      id='role'
-                      labelId='user-view-language-label'
-                      onChange={handleInputChangeRole}
-                    >
-                      <MenuItem value='1'>Super Admin</MenuItem>
-                      <MenuItem value='2'>Admin/Employee</MenuItem>
-                      <MenuItem value='3'>Subscriber</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label='Country'
-                    value={editData.country}
-                    onChange={handleInputChangeCountry}
-                    InputProps={{ startAdornment: <InputAdornment position='start'>@</InputAdornment> }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label='Company'
-                    value={editData.company}
-                    onChange={handleInputChangeCompany}
-                    InputProps={{ startAdornment: <InputAdornment position='start'>@</InputAdornment> }}
-                  />
-                </Grid>
-                {/* <Grid item xs={12}>
+              open={openEdit}
+              onClose={handleEditClose}
+              aria-labelledby='user-view-edit'
+              sx={{ '& .MuiPaper-root': { width: '100%', maxWidth: 650, p: [2, 10] } }}
+              aria-describedby='user-view-edit-description'
+            >
+              <DialogTitle id='user-view-edit' sx={{ textAlign: 'center', fontSize: '1.5rem !important' }}>
+                Edit User Information
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText variant='body2' id='user-view-edit-description' sx={{ textAlign: 'center', mb: 7 }}>
+                  Update user details here.
+                </DialogContentText>
+                {editData &&<form>
+                  <Grid container spacing={6}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField fullWidth label='Full Name' value={editData.firstname} onChange={handleInputChange} />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label='Username'
+                        value={editData.username}
+                        onChange={handleInputChangeUsername} 
+                        InputProps={{ startAdornment: <InputAdornment position='start'>@</InputAdornment> }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField fullWidth type='email' label='Email' value={editData.email} onChange={handleInputChangeEmail}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label='Password'
+                        value={editData.password}
+                        onChange={handleInputChangePassword} 
+                        InputProps={{ startAdornment: <InputAdornment position='start'>@</InputAdornment> }}
+                      />
+                    </Grid>
+                   
+                    <Grid item xs={12} sm={6}>
+                      <TextField fullWidth label='Contact' value={editData.contact_no} onChange={handleInputChangeContact} />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id='user-view-language-label'>Current Plan</InputLabel>
+                        <Select
+                          label='CurrentPlan'
+                          value={editData.current_plan}
+                          id='currentPlan'
+                          labelId='user-view-language-label'
+                          onChange={handleInputChangeCurrentPlan}
+                        >
+                           <MenuItem value='basic'>Basic</MenuItem>
+                          <MenuItem value='company'>Company</MenuItem>
+                          <MenuItem value='enterprise'>Enterprise</MenuItem>
+                          <MenuItem value='team'>Team</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id='user-view-language-label'>Select Role</InputLabel>
+                        <Select
+                          label='Role'
+                          value={editData.role}
+                          id='role'
+                          labelId='user-view-language-label'
+                          onChange={handleInputChangeRole}
+                        >
+                          <MenuItem value='1'>Super Admin</MenuItem>
+                          <MenuItem value='2'>Admin/Employee</MenuItem>
+                          <MenuItem value='3'>Subscriber</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                    <TextField
+                        fullWidth
+                        label='Country'
+                        value={editData.country}
+                        onChange={handleInputChangeCountry}
+                        InputProps={{ startAdornment: <InputAdornment position='start'>@</InputAdornment> }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        label='Company'
+                        value={editData.company}
+                        onChange={handleInputChangeCompany}
+                        InputProps={{ startAdornment: <InputAdornment position='start'>@</InputAdornment> }}
+                      />
+                    </Grid>
+                    {/* <Grid item xs={12}>
                       <FormControlLabel
                         label='Use as a billing address?'
                         control={<Switch defaultChecked />}
                         sx={{ '& .MuiTypography-root': { fontWeight: 500 } }}
                       />
                     </Grid> */}
-              </Grid>
-            </form>
-          )}
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button variant='contained' sx={{ mr: 1 }} onClick={handleEditData}>
-            Submit
-          </Button>
-          <Button variant='outlined' color='secondary' onClick={handleEditClose}>
-            Cancel
-          </Button>
-        </DialogActions>
+                  </Grid>
+                </form>}
+              </DialogContent>
+              <DialogActions sx={{ justifyContent: 'center' }}>
+                <Button variant='contained' sx={{ mr: 1 }} onClick={handleEditData}>
+                  Submit
+                </Button>
+                <Button variant='outlined' color='secondary' onClick={handleEditClose}>
+                  Cancel
+                </Button>
+              </DialogActions>
       </Dialog>
-      <UserSuspendDialog open={suspendDialogOpen} setOpen={setSuspendDialogOpen} deleteData={id} pageName='User' />
+      <UserSuspendDialog open={suspendDialogOpen} setOpen={setSuspendDialogOpen} deleteData={id} pageName="User"/>
     </>
   )
 }
 
-const columns: GridColumns<UsersType> = [
+const columns:GridColumns<UsersType> = [
   {
     flex: 0.2,
     minWidth: 230,
@@ -410,7 +396,6 @@ const columns: GridColumns<UsersType> = [
     headerName: 'User',
     renderCell: ({ row }: CellType) => {
       const { fullName, username } = row
-
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {renderClient(row)}
@@ -444,14 +429,14 @@ const columns: GridColumns<UsersType> = [
     headerName: 'Role',
     renderCell: ({ row }: CellType) => {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3 } }}>
-          {/* <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3, color: userRoleObj[row.role].color } }}> */}
+        <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3} }}>
+         {/* <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3, color: userRoleObj[row.role].color } }}> */}
           {/* <Icon icon={userRoleObj[row.role].icon} fontSize={20} /> */}
-
+          
           <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
-            {row.role === '1' && 'Superadmin'}
-            {row.role === '2' && 'Admin/Employee'}
-            {row.role === '3' && 'Subscriber'}
+            {row.role === "1" && "Superadmin"}
+            {row.role === "2" && "Admin/Employee"}
+            {row.role === "3" && "Subscriber"}
           </Typography>
         </Box>
       )
@@ -480,7 +465,7 @@ const columns: GridColumns<UsersType> = [
         <CustomChip
           skin='light'
           size='small'
-          label={row.status === '1' ? 'Active' : 'InActive'}
+          label={row.status === "1" ? "Active" : "InActive"}
           color={userStatusObj[row.status]}
           sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
         />
@@ -505,11 +490,13 @@ const UserList = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) =
   const [status, setStatus] = useState<string>('')
   const [pageSize, setPageSize] = useState<number>(10)
   const [addUserOpen, setAddUserOpen] = useState<boolean>(false)
+  
 
   // ** Hooks
   const dispatch = useDispatch<AppDispatch>()
   const store = useSelector((state: RootState) => state.user)
-  console.log('************store data is', store)
+  console.log("************store data is",store);
+ 
 
   useEffect(() => {
     dispatch(
@@ -539,6 +526,7 @@ const UserList = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) =
   }, [])
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
+  
 
   return (
     <Grid container spacing={6}>
@@ -637,6 +625,8 @@ const UserList = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) =
       </Grid>
 
       <AddUserDrawer open={addUserOpen} toggle={toggleAddUserDrawer} />
+     
+       
     </Grid>
   )
 }

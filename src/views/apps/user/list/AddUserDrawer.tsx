@@ -45,8 +45,8 @@ interface UserData {
   fullname: string
   username: string
   password: string
-  current_plan: string
-  role: string
+  current_plan:string,
+  role:string
 }
 
 const showErrors = (field: string, valueLen: number, min: number) => {
@@ -94,9 +94,9 @@ const defaultValues = {
   fullname: '',
   username: '',
   contact: Number(''),
-  password: '',
-  current_plan: '',
-  role: ''
+  password:'',
+  current_plan:'',
+  role:''
 }
 
 const SidebarAddUser = (props: SidebarAddUserType) => {
@@ -122,10 +122,10 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
   })
 
   const onSubmit = (data: UserData) => {
-    console.log('OnSubmit of Users', data)
-    data.current_plan = plan
-    data.role = role
-    dispatch(addUser({ ...data }))
+    console.log("OnSubmit of Users",data);
+    data.current_plan = plan;
+    data.role = role;
+    dispatch(addUser({...data}))
     toggle()
     reset()
   }

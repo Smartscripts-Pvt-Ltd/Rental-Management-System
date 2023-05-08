@@ -14,7 +14,6 @@ import Box, { BoxProps } from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
 import Button, { ButtonProps } from '@mui/material/Button'
-
 // ** Third Party Imports
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -57,6 +56,7 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
   }
 }))
 
+
 interface SidebarAddUserType {
   open: boolean
   toggle: () => void
@@ -67,7 +67,7 @@ interface UserData {
   abbreavation: string
   description: string
   status: string
-  image: string
+  image : string
 }
 
 const showErrors = (field: string, valueLen: number, min: number) => {
@@ -92,8 +92,7 @@ const schema = yup.object().shape({
   category_name: yup.string().required(),
   abbreavation: yup.string().required(),
   description: yup.string().required(),
-  status: yup.string()
-
+  status: yup.string(),
   // featured_image : yup.string().required()
 })
 
@@ -102,7 +101,7 @@ const defaultValues = {
   abbreavation: '',
   description: '',
   status: '',
-  image: ''
+  image : ''
 }
 
 const SidebarAddUser = (props: SidebarAddUserType) => {
@@ -130,17 +129,17 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
   })
 
   const onSubmit = (data: UserData) => {
-    debugger
-    console.log('OnSubmit of Users', data)
-    const obj = {
+    debugger;
+    console.log("OnSubmit of Users",data);
+    let obj = {
       cat: data.category_name,
       status: status,
       image: imgSrc,
       abbreavation: data.abbreavation,
       description: data.description
     }
-
-    dispatch(addCategory({ ...obj }))
+   
+    dispatch(addCategory({...obj}))
     toggle()
     reset()
   }
@@ -202,9 +201,7 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
                 />
               )}
             />
-            {errors.category_name && (
-              <FormHelperText sx={{ color: 'error.main' }}>{errors.category_name.message}</FormHelperText>
-            )}
+            {errors.category_name && <FormHelperText sx={{ color: 'error.main' }}>{errors.category_name.message}</FormHelperText>}
           </FormControl>
           <FormControl fullWidth sx={{ mb: 6 }}>
             <Controller
@@ -221,9 +218,7 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
                 />
               )}
             />
-            {errors.abbreavation && (
-              <FormHelperText sx={{ color: 'error.main' }}>{errors.abbreavation.message}</FormHelperText>
-            )}
+            {errors.abbreavation && <FormHelperText sx={{ color: 'error.main' }}>{errors.abbreavation.message}</FormHelperText>}
           </FormControl>
           <FormControl fullWidth sx={{ mb: 6 }}>
             <Controller
@@ -240,31 +235,29 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
                 />
               )}
             />
-            {errors.description && (
-              <FormHelperText sx={{ color: 'error.main' }}>{errors.description.message}</FormHelperText>
-            )}
+            {errors.description && <FormHelperText sx={{ color: 'error.main' }}>{errors.description.message}</FormHelperText>}
           </FormControl>
           {/* <FormControl fullWidth sx={{ mb: 6 }}> */}
           <ImgStyled src={imgSrc} alt='Profile Pic' />
-          <div>
-            <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
-              Upload New Photo
-              <input
-                hidden
-                type='file'
-                value={inputValue}
-                accept='image/png, image/jpeg'
-                onChange={handleInputImageChange}
-                id='account-settings-upload-image'
-              />
-            </ButtonStyled>
-            <ResetButtonStyled color='secondary' variant='outlined' onClick={handleInputImageReset}>
-              Reset
-            </ResetButtonStyled>
-            <Typography sx={{ mt: 5, color: 'text.disabled' }}>Allowed PNG or JPEG. Max size of 800K.</Typography>
-          </div>
+                <div>
+                  <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
+                    Upload New Photo
+                    <input
+                      hidden
+                      type='file'
+                      value={inputValue}
+                      accept='image/png, image/jpeg'
+                      onChange={handleInputImageChange}
+                      id='account-settings-upload-image'
+                    />
+                  </ButtonStyled>
+                  <ResetButtonStyled color='secondary' variant='outlined' onClick={handleInputImageReset}>
+                    Reset
+                  </ResetButtonStyled>
+                  <Typography sx={{ mt: 5, color: 'text.disabled' }}>Allowed PNG or JPEG. Max size of 800K.</Typography>
+                </div>
           {/* </FormControl> */}
-
+      
           <FormControl fullWidth sx={{ mb: 6 }}>
             <InputLabel id='role-select'>Status</InputLabel>
             <Select
@@ -278,9 +271,10 @@ const SidebarAddUser = (props: SidebarAddUserType) => {
             >
               <MenuItem value='1'>Active</MenuItem>
               <MenuItem value='2'>InActive</MenuItem>
+             
             </Select>
           </FormControl>
-
+     
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button size='large' type='submit' variant='contained' sx={{ mr: 3 }}>
               Submit

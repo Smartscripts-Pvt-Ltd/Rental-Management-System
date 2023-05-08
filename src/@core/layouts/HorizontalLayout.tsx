@@ -63,8 +63,8 @@ const ContentWrapper = styled('main')(({ theme }) => ({
 }))
 
 const HorizontalLayout = (props: LayoutProps) => {
-  console.log('*******props in horizontal layout', props)
 
+  console.log("*******props in horizontal layout",props)
   // ** Props
   const {
     hidden,

@@ -160,8 +160,7 @@ const columns = [
     field: 'status',
     headerName: 'Status',
     renderCell: ({ row }: CellType) => {
-      console.log('Inside status row', row)
-
+      console.log("Inside status row", row)
       return (
         <CustomChip
           skin='light'
@@ -196,6 +195,8 @@ const UserList = () => {
   // ** Hooks
   const dispatch = useDispatch<AppDispatch>()
   const store = useSelector((state: RootState) => state.user)
+  
+
 
   useEffect(() => {
     dispatch(
@@ -207,6 +208,8 @@ const UserList = () => {
       })
     )
   }, [dispatch, plan, value])
+
+  
 
   const handleFilter = useCallback((val: string) => {
     setValue(val)

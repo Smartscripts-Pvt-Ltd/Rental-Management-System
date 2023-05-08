@@ -22,7 +22,7 @@ export type CategoryType = {
   abbreavation: string
   description: string
   status: string
-  image: string
+  image : string
 }
 
 export type SubCategoryType = {
@@ -31,7 +31,7 @@ export type SubCategoryType = {
   abbreavation: string
   description: string
   status: string
-  image: string
+  image : string
 }
 export type ProductType = {
   id: string
@@ -43,6 +43,7 @@ export type ProductType = {
   image: string
   status: string
 }
+
 
 export type ProjectListDataType = {
   id: number
