@@ -15,9 +15,9 @@ const withTM = require('next-transpile-modules')([
 module.exports = withTM({
   assetPrefix: './',
   images: {
-   unoptimized: true
- },
-  output: 'export',
+    unoptimized: true
+  },
+  output: 'standalone',
   trailingSlash: true,
   reactStrictMode: false,
   eslint: {
