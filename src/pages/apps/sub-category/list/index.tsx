@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, useEffect, MouseEvent, useCallback,ElementType , ChangeEvent} from 'react'
+import { useState, useEffect, MouseEvent, useCallback, ElementType, ChangeEvent } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -28,7 +28,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContentText from '@mui/material/DialogContentText'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
-import Button, {ButtonProps} from '@mui/material/Button'
+import Button, { ButtonProps } from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 // ** Icon Imports
@@ -46,7 +46,12 @@ import CardStatisticsHorizontal from 'src/@core/components/card-statistics/card-
 import { getInitials } from 'src/@core/utils/get-initials'
 
 // ** Actions Imports
-import { fetchDataSubCategory, deleteSubCategory, editSubCategory, updateSubCategory } from 'src/store/apps/sub-category'
+import {
+  fetchDataSubCategory,
+  deleteSubCategory,
+  editSubCategory,
+  updateSubCategory
+} from 'src/store/apps/sub-category'
 
 // ** Third Party Components
 import axios from 'axios'
@@ -62,7 +67,6 @@ import { CardStatsHorizontalProps } from 'src/@core/components/card-statistics/t
 import TableHeader from 'src/views/apps/user/list/TableHeaderSubCategory'
 import AddUserDrawer from 'src/views/apps/user/list/AddSubCategoryDrawer'
 import UserSuspendDialog from 'src/views/apps/user/view/UserSuspendDialog'
-
 
 const ImgStyled = styled('img')(({ theme }) => ({
   width: 120,
@@ -88,14 +92,13 @@ const ResetButtonStyled = styled(Button)<ButtonProps>(({ theme }) => ({
   }
 }))
 
-
 let data: SubCategoryType = {
-  id:'',
+  id: '',
   sub_catname: '',
   abbreavation: '',
   description: '',
   status: '',
-  image : ''
+  image: ''
 }
 interface UserRoleType {
   [key: string]: { icon: string; color: string }
@@ -167,33 +170,29 @@ const RowOptions = ({ id }: { id: number | string }) => {
     setAnchorEl(event.currentTarget)
   }
   const handleRowOptionsClose = () => {
-     setAnchorEl(null)
+    setAnchorEl(null)
   }
 
-  
   const [status, setStaus] = useState<string>('1')
   const [imgSrc, setImgSrc] = useState<string>('/images/avatars/1.png')
   const [inputValue, setInputValue] = useState<string>('')
-  
-  
+
   const editstore = useSelector((state: RootState) => state.subCategory.editData)
-  console.log("************store data is",editstore);
+  console.log('************store data is', editstore)
   let [editData, setEditData] = useState({
-    id: "",
-    sub_catname: "",
-    abbreavation: "",
-    description: "",
-    status: "",
-    image : "",
+    id: '',
+    sub_catname: '',
+    abbreavation: '',
+    description: '',
+    status: '',
+    image: ''
   })
 
- 
   useEffect(() => {
-      if(editstore) {
-        setEditData(editstore)
-      }
+    if (editstore) {
+      setEditData(editstore)
+    }
   }, [editstore])
- 
 
   const handleEdit = () => {
     dispatch(editSubCategory(id))
@@ -201,20 +200,20 @@ const RowOptions = ({ id }: { id: number | string }) => {
     handleRowOptionsClose()
   }
 
-  const handleInputChange = (e:any) => {
-    setEditData({...editData, sub_catname: e.target.value})
+  const handleInputChange = (e: any) => {
+    setEditData({ ...editData, sub_catname: e.target.value })
   }
 
-  const handleInputChangeAbbreavation = (e:any) => {
-    setEditData({...editData, abbreavation: e.target.value})
+  const handleInputChangeAbbreavation = (e: any) => {
+    setEditData({ ...editData, abbreavation: e.target.value })
   }
 
-  const handleInputChangeStatus= (e:any) => {
-    setEditData({...editData, status: e.target.value})
+  const handleInputChangeStatus = (e: any) => {
+    setEditData({ ...editData, status: e.target.value })
   }
 
-  const handleInputChangeDescription = (e:any) => {
-    setEditData({...editData, description: e.target.value})
+  const handleInputChangeDescription = (e: any) => {
+    setEditData({ ...editData, description: e.target.value })
   }
 
   const handleInputImageChange = (file: ChangeEvent) => {
@@ -233,7 +232,6 @@ const RowOptions = ({ id }: { id: number | string }) => {
     setInputValue('')
     setImgSrc('/images/avatars/1.png')
   }
-
 
   const handleEditData = () => {
     dispatch(updateSubCategory(editData))
@@ -265,7 +263,7 @@ const RowOptions = ({ id }: { id: number | string }) => {
         }}
         PaperProps={{ style: { minWidth: '8rem' } }}
       >
-        <MenuItem
+        {/* <MenuItem
           component={Link}
           sx={{ '& svg': { mr: 2 } }}
           onClick={handleRowOptionsClose}
@@ -273,7 +271,7 @@ const RowOptions = ({ id }: { id: number | string }) => {
         >
           <Icon icon='mdi:eye-outline' fontSize={20} />
           View
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={handleEdit} sx={{ '& svg': { mr: 2 } }}>
           <Icon icon='mdi:pencil-outline' fontSize={20} />
           Edit
@@ -285,89 +283,108 @@ const RowOptions = ({ id }: { id: number | string }) => {
       </Menu>
       {/* <EditUserDrawer open={editUserOpen} toggle={toggleEditUserDrawer}></EditUserDrawer> */}
       <Dialog
-              open={openEdit}
-              onClose={handleEditClose}
-              aria-labelledby='user-view-edit'
-              sx={{ '& .MuiPaper-root': { width: '100%', maxWidth: 650, p: [2, 10] } }}
-              aria-describedby='user-view-edit-description'
-            >
-              <DialogTitle id='user-view-edit' sx={{ textAlign: 'center', fontSize: '1.5rem !important' }}>
-                Edit Sub Category Information
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText variant='body2' id='user-view-edit-description' sx={{ textAlign: 'center', mb: 7 }}>
-                  Update Sub Category details here.
-                </DialogContentText>
-                {editData &&<form>
-                  <Grid container spacing={6}>
-                    <Grid item xs={12} sm={6}>
-                      <TextField fullWidth label='Sub Category Name' value={editData.sub_catname} onChange={handleInputChange} />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        label='Abbreavation'
-                        value={editData.abbreavation}
-                        onChange={handleInputChangeAbbreavation} 
+        open={openEdit}
+        onClose={handleEditClose}
+        aria-labelledby='user-view-edit'
+        sx={{ '& .MuiPaper-root': { width: '100%', maxWidth: 650, p: [2, 10] } }}
+        aria-describedby='user-view-edit-description'
+      >
+        <DialogTitle id='user-view-edit' sx={{ textAlign: 'center', fontSize: '1.5rem !important' }}>
+          Edit Sub Category Information
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText variant='body2' id='user-view-edit-description' sx={{ textAlign: 'center', mb: 7 }}>
+            Update Sub Category details here.
+          </DialogContentText>
+          {editData && (
+            <form>
+              <Grid container spacing={6}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    label='Sub Category Name'
+                    value={editData.sub_catname}
+                    onChange={handleInputChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    label='Abbreavation'
+                    value={editData.abbreavation}
+                    onChange={handleInputChangeAbbreavation}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    type='text'
+                    label='Description'
+                    value={editData.description}
+                    onChange={handleInputChangeDescription}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth>
+                    <InputLabel id='user-view-language-label'>Status</InputLabel>
+                    <Select
+                      label='Status'
+                      value={editData.status}
+                      id='status'
+                      labelId='user-view-language-label'
+                      onChange={handleInputChangeStatus}
+                    >
+                      <MenuItem value='1'>Active</MenuItem>
+                      <MenuItem value='2'>InActive</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <ImgStyled src={imgSrc} alt='Profile Pic' />
+                  <div>
+                    <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
+                      Upload New Photo
+                      <input
+                        hidden
+                        type='file'
+                        value={inputValue}
+                        accept='image/png, image/jpeg'
+                        onChange={handleInputImageChange}
+                        id='account-settings-upload-image'
                       />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField fullWidth type='text' label='Description' value={editData.description} onChange={handleInputChangeDescription}/>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <FormControl fullWidth>
-                        <InputLabel id='user-view-language-label'>Status</InputLabel>
-                        <Select
-                          label='Status'
-                          value={editData.status}
-                          id='status'
-                          labelId='user-view-language-label'
-                          onChange={handleInputChangeStatus}
-                        >
-                           <MenuItem value='1'>Active</MenuItem>
-                          <MenuItem value='2'>InActive</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                    <ImgStyled src={imgSrc} alt='Profile Pic' />
-                    <div>
-                      <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
-                        Upload New Photo
-                        <input
-                          hidden
-                          type='file'
-                          value={inputValue}
-                          accept='image/png, image/jpeg'
-                          onChange={handleInputImageChange}
-                          id='account-settings-upload-image'
-                        />
-                      </ButtonStyled>
-                      <ResetButtonStyled color='secondary' variant='outlined' onClick={handleInputImageReset}>
-                        Reset
-                      </ResetButtonStyled>
-                      <Typography sx={{ mt: 5, color: 'text.disabled' }}>Allowed PNG or JPEG. Max size of 800K.</Typography>
-                    </div>
-                    </Grid>
-                   
-                  </Grid>
-                </form>}
-              </DialogContent>
-              <DialogActions sx={{ justifyContent: 'center' }}>
-                <Button variant='contained' sx={{ mr: 1 }} onClick={handleEditData}>
-                  Submit
-                </Button>
-                <Button variant='outlined' color='secondary' onClick={handleEditClose}>
-                  Cancel
-                </Button>
-              </DialogActions>
-            </Dialog>
-            <UserSuspendDialog open={suspendDialogOpen} setOpen={setSuspendDialogOpen} deleteData={id} pageName="SubCategory"/>
+                    </ButtonStyled>
+                    <ResetButtonStyled color='secondary' variant='outlined' onClick={handleInputImageReset}>
+                      Reset
+                    </ResetButtonStyled>
+                    <Typography sx={{ mt: 5, color: 'text.disabled' }}>
+                      Allowed PNG or JPEG. Max size of 800K.
+                    </Typography>
+                  </div>
+                </Grid>
+              </Grid>
+            </form>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: 'center' }}>
+          <Button variant='contained' sx={{ mr: 1 }} onClick={handleEditData}>
+            Submit
+          </Button>
+          <Button variant='outlined' color='secondary' onClick={handleEditClose}>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <UserSuspendDialog
+        open={suspendDialogOpen}
+        setOpen={setSuspendDialogOpen}
+        deleteData={id}
+        pageName='SubCategory'
+      />
     </>
   )
 }
 
-const columns:GridColumns<SubCategoryType> = [
+const columns: GridColumns<SubCategoryType> = [
   {
     flex: 0.2,
     minWidth: 230,
@@ -406,10 +423,10 @@ const columns:GridColumns<SubCategoryType> = [
     headerName: 'Description',
     renderCell: ({ row }: CellType) => {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3} }}>
-         {/* <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3, color: userRoleObj[row.role].color } }}> */}
+        <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3 } }}>
+          {/* <Box sx={{ display: 'flex', alignItems: 'center', '& svg': { mr: 3, color: userRoleObj[row.role].color } }}> */}
           {/* <Icon icon={userRoleObj[row.role].icon} fontSize={20} /> */}
-          
+
           <Typography noWrap sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>
             {row.description}
           </Typography>
@@ -423,10 +440,7 @@ const columns:GridColumns<SubCategoryType> = [
     headerName: 'Featured_image ',
     field: 'featured_image ',
     renderCell: ({ row }: CellType) => {
-      return(
-        <Avatar src={row.image} sx={{ mr: 4, width: 38, height: 38 }} />
-      )
-     
+      return <Avatar src={row.image} sx={{ mr: 4, width: 38, height: 38 }} />
     }
   },
   {
@@ -439,7 +453,7 @@ const columns:GridColumns<SubCategoryType> = [
         <CustomChip
           skin='light'
           size='small'
-          label={row.status === "1" ? "Active" : "InActive"}
+          label={row.status === '1' ? 'Active' : 'InActive'}
           color={userStatusObj[row.status]}
           sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
         />
@@ -464,16 +478,14 @@ const UserList = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) =
   const [status, setStatus] = useState<string>('')
   const [pageSize, setPageSize] = useState<number>(10)
   const [addUserOpen, setAddUserOpen] = useState<boolean>(false)
-  
 
   // ** Hooks
   const dispatch = useDispatch<AppDispatch>()
   const store = useSelector((state: RootState) => state.subCategory)
-  console.log("************store data is",store);
-  
+  console.log('************store data is', store)
 
   useEffect(() => {
-    debugger;
+    debugger
     dispatch(
       fetchDataSubCategory({
         role,
@@ -501,7 +513,6 @@ const UserList = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) =
   }, [])
 
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen)
-  
 
   return (
     <Grid container spacing={6}>
@@ -520,7 +531,6 @@ const UserList = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) =
       </Grid>
       <Grid item xs={12}>
         <Card>
-         
           <TableHeader value={value} handleFilter={handleFilter} toggle={toggleAddUserDrawer} />
           <DataGrid
             autoHeight
@@ -537,8 +547,6 @@ const UserList = ({ apiData }: InferGetStaticPropsType<typeof getStaticProps>) =
       </Grid>
 
       <AddUserDrawer open={addUserOpen} toggle={toggleAddUserDrawer} />
-     
-       
     </Grid>
   )
 }

@@ -28,32 +28,32 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'List',
           path: '/apps/user/list'
-        },
-        {
-          title: 'View',
-          children: [
-            {
-              title: 'Overview',
-              path: '/apps/user/view/overview'
-            },
-            {
-              title: 'Security',
-              path: '/apps/user/view/security'
-            },
-            {
-              title: 'Billing & Plans',
-              path: '/apps/user/view/billing-plan'
-            },
-            {
-              title: 'Notifications',
-              path: '/apps/user/view/notification'
-            },
-            {
-              title: 'Connection',
-              path: '/apps/user/view/connection'
-            }
-          ]
         }
+        // {
+        //   title: 'View',
+        //   children: [
+        //     {
+        //       title: 'Overview',
+        //       path: '/apps/user/view/overview'
+        //     },
+        //     {
+        //       title: 'Security',
+        //       path: '/apps/user/view/security'
+        //     },
+        //     {
+        //       title: 'Billing & Plans',
+        //       path: '/apps/user/view/billing-plan'
+        //     },
+        //     {
+        //       title: 'Notifications',
+        //       path: '/apps/user/view/notification'
+        //     },
+        //     {
+        //       title: 'Connection',
+        //       path: '/apps/user/view/connection'
+        //     }
+        //   ]
+        // }
       ]
     },
     {
@@ -85,26 +85,26 @@ const navigation = (): VerticalNavItemsType => {
           path: '/apps/products/list'
         }
       ]
-    },
-    {
-      sectionTitle: 'Masters'
-    },
-    {
-      title: 'Category',
-      icon: 'mdi:iif-icon-grid',
-      path: '/apps/Category'
-    },
-    {
-      title: 'Sub Category',
-      icon: 'mdi:email-outline',
-      path: '/apps/subCategory'
-    },
+    }
+    // {
+    //   sectionTitle: 'Masters'
+    // },
+    // {
+    //   title: 'Category',
+    //   icon: 'mdi:iif-icon-grid',
+    //   path: '/apps/Category'
+    // },
+    // {
+    //   title: 'Sub Category',
+    //   icon: 'mdi:email-outline',
+    //   path: '/apps/subCategory'
+    // },
 
-    {
-      title: 'Email',
-      icon: 'mdi:email-outline',
-      path: '/apps/email'
-    },
+    // {
+    //   title: 'Email',
+    //   icon: 'mdi:email-outline',
+    //   path: '/apps/email'
+    // },
 
     // {
     //   title: 'Chat',
@@ -611,55 +611,55 @@ const navigation = (): VerticalNavItemsType => {
     //     }
     //   ]
     // },
-    {
-      path: '/acl',
-      action: 'read',
-      subject: 'acl-page',
-      icon: 'mdi:shield-outline',
-      title: 'Access Control'
-    },
-    {
-      title: 'Others',
-      icon: 'mdi:dots-horizontal',
-      children: [
-        // {
-        //   title: 'Menu Levels',
-        //   children: [
-        //     {
-        //       title: 'Menu Level 2.1'
-        //     },
-        //     {
-        //       title: 'Menu Level 2.2',
-        //       children: [
-        //         {
-        //           title: 'Menu Level 3.1'
-        //         },
-        //         {
-        //           title: 'Menu Level 3.2'
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // },
+    // {
+    //   path: '/acl',
+    //   action: 'read',
+    //   subject: 'acl-page',
+    //   icon: 'mdi:shield-outline',
+    //   title: 'Access Control'
+    // },
+    // {
+    //   title: 'Others',
+    //   icon: 'mdi:dots-horizontal',
+    //   children: [
+    //     // {
+    //     //   title: 'Menu Levels',
+    //     //   children: [
+    //     //     {
+    //     //       title: 'Menu Level 2.1'
+    //     //     },
+    //     //     {
+    //     //       title: 'Menu Level 2.2',
+    //     //       children: [
+    //     //         {
+    //     //           title: 'Menu Level 3.1'
+    //     //         },
+    //     //         {
+    //     //           title: 'Menu Level 3.2'
+    //     //         }
+    //     //       ]
+    //     //     }
+    //     //   ]
+    //     // },
 
-        // {
-        //   title: 'Disabled Menu',
-        //   disabled: true
-        // },
-        // {
-        //   title: 'Raise Support',
-        //   externalLink: true,
-        //   openInNewTab: true,
-        //   path: 'https://pixinvent.ticksy.com/'
-        // },
-        {
-          title: 'Documentation',
-          externalLink: true,
-          openInNewTab: true,
-          path: 'https://pixinvent.com/demo/materialize-mui-react-nextjs-admin-template/documentation'
-        }
-      ]
-    }
+    //     // {
+    //     //   title: 'Disabled Menu',
+    //     //   disabled: true
+    //     // },
+    //     // {
+    //     //   title: 'Raise Support',
+    //     //   externalLink: true,
+    //     //   openInNewTab: true,
+    //     //   path: 'https://pixinvent.ticksy.com/'
+    //     // },
+    //     {
+    //       title: 'Documentation',
+    //       externalLink: true,
+    //       openInNewTab: true,
+    //       path: 'https://pixinvent.com/demo/materialize-mui-react-nextjs-admin-template/documentation'
+    //     }
+    //   ]
+    // }
   ]
 }
 
